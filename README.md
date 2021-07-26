@@ -40,9 +40,9 @@ Given the data in the CSV file provided to you:
   1. Design a relational database schema to store the data for the Ships and their Positions.
   2. Write Python code to automatically load the CSV data into a relational database.
   3. Write, using Python, a REST API that implements 2 endpoints:    
-    a. /api/ships/ : must show a list of current ships in the database. Payload
+    a. `/api/ships/` : must show a list of current ships in the database. Payload
   should show at least the imo and name of every ship record.    
-    b. /api/positions/<imo>/ : given the imo of one of the ships, must show
+    b. `/api/positions/<imo>/` : given the imo of one of the ships, must show
   the positions related to that ship in descendent order (starting from the last
   one received, list all of them until the oldest one). Payload should also show
   at least the latitude and longitude of every position.
@@ -76,3 +76,64 @@ provide us with a Docker environment it will be greatly appreciated.
 API.    
 ● Think before write code. There is no timing in this exercise, it can take as long as you
 need, once started.    
+
+
+# Features
+
+- Django 3.2 and Python 3.9
+- [Pipenv](https://github.com/pypa/pipenv) for virtualenvs
+- [Docker] soon.
+
+# First-time setup
+
+1.  Make sure Python 3.9x and Pipenv are already installed. [See here for help](https://djangoforbeginners.com/initial-setup/).
+2.  Clone the repo and configure the virtual environment:
+
+```
+$ git clone https://github.com/mushishi06/ships_tracking.git
+$ cd ships_tracking
+$ pipenv install
+$ pipenv shell
+```
+
+3.  Run:
+
+```
+(ships_tracking) $ python manage.py runserver
+```
+
+## API Details:
+
+Two django Command are provided:
+
+The 1st is used to import data from a .csv file located in `<root>/data`.    
+the command is a simple one and didn't check duplicate import
+
+```
+(ships_tracking) $ python manage.py import_external File_Name.csv
+```
+
+
+The 2nd is used to delete all positions entries for a particular `<IMO>`
+
+```
+(ships_tracking) $ python manage.py drop_positions 9247455
+```
+
+## Django Admin:    
+
+The Django Admin is active at `http://127.0.0.1:8000/admin/`    
+with the defauld username/password:  `admin`/`password123`
+
+### Web browsable API (via DRF)
+
+The Web browsable API provide by Django REST framework is accessible via:
+* `http://127.0.0.1:8000/api/ships/`
+* `http://127.0.0.1:8000/api/positions/`
+* `http://127.0.0.1:8000/api/positions/9632179`
+
+### Interactive MAP
+
+An interactive map using the Data from this API is located at the root:
+
+`http://127.0.0.1:8000/`
